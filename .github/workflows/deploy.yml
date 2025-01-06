@@ -5,6 +5,9 @@ on:
     branches:
       - main  # Replace 'main' with your branch name if it's different
 
+permissions:
+  contents: write   # Grant write permission to push changes to the repository
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -22,5 +25,5 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
         publish_dir: ./public  # Deploy the contents of the public folder
