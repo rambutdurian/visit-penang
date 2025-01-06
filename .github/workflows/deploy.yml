@@ -3,35 +3,29 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Use the branch you are working with, e.g., 'main' or 'master'
-
-permissions:
-  contents: write   # Grant permission to push changes to the repository
+      - main  # Replace with the branch you want to trigger the deploy from
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'  # Change this version to the one your project uses
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-    - name: Install dependencies
-      run: |
-        npm install  # Install all dependencies
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build the project
-      run: |
-        npm run build  # Build the production version of your app
+      - name: Build the project
+        run: npm run build
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build  # Use the 'build' directory for deployment (React, etc.)
-        target_branch: gh-pages  # Push the build to the gh-pages branch
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
