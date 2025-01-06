@@ -19,10 +19,12 @@ jobs:
     - name: Copy files to deploy folder
       run: |
         mkdir -p public  # Create a public directory for the deployment
-        cp -r ./my-react-app/* ./public/  # Copy index.html from my-react-app folder to public
+        cp -r ./my-react-app/index.html ./public/  # Copy index.html from my-react-app folder to public
+        cp -r ./my-react-app/src/* ./public/     # Copy everything from the my-react-app/src folder to public
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
         publish_dir: ./public  # Deploy the contents of the public folder
+        target_branch: gh-pages  # Push to the 'gh-pages' branch
