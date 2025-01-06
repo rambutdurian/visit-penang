@@ -3,10 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Replace 'main' with your branch name if it's different
+      - main  # Use the branch you are working with, e.g., 'main' or 'master'
 
 permissions:
-  contents: write   # Grant write permission to push changes to the repository
+  contents: write   # Grant permission to push changes to the repository
 
 jobs:
   deploy:
@@ -16,15 +16,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Copy files to deploy folder
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'  # Change this version to the one your project uses
+
+    - name: Install dependencies
       run: |
-        mkdir -p public  # Create a public directory for the deployment
-        cp -r ./my-react-app/index.html ./public/  # Copy index.html from my-react-app folder to public
-        cp -r ./my-react-app/src/main.jsx ./public/     # Copy everything from the my-react-app/src folder to public
+        npm install  # Install all dependencies
+
+    - name: Build the project
+      run: |
+        npm run build  # Build the production version of your app
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
-        publish_dir: ./public  # Deploy the contents of the public folder
-        target_branch: gh-pages  # Push to the 'gh-pages' branch
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build  # Use the 'build' directory for deployment (React, etc.)
+        target_branch: gh-pages  # Push the build to the gh-pages branch
