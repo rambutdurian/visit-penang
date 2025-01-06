@@ -20,7 +20,7 @@ jobs:
       run: |
         mkdir -p public  # Create a public directory for the deployment
         cp -r ./my-react-app/index.html ./public/  # Copy index.html from my-react-app folder to public
-        cp -r ./my-react-app/src/* ./public/     # Copy everything from the my-react-app/src folder to public
+        cp -r ./my-react-app/src/main.jsx ./public/     # Copy everything from the my-react-app/src folder to public
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
